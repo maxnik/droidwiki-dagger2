@@ -33,10 +33,8 @@ package com.raywenderlich.android.droidwiki.ui.search
 import com.raywenderlich.android.droidwiki.network.Wiki
 import com.raywenderlich.android.droidwiki.model.SearchResult
 import com.raywenderlich.android.droidwiki.network.WikiApi
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Response
+import com.raywenderlich.android.droidwiki.utils.Const
+import okhttp3.*
 import java.io.IOException
 
 class EntryPresenterImpl : EntryPresenter {
@@ -44,7 +42,8 @@ class EntryPresenterImpl : EntryPresenter {
   private lateinit var entryView: EntryView
 
   private val client: OkHttpClient = OkHttpClient()
-  private val api: WikiApi = WikiApi(client)
+  // TODO Remove after converting to dependency injection
+  private val api: WikiApi = WikiApi(client, HttpUrl.parse("${Const.PROTOCOL}://${Const.LANGUAGE}.${Const.BASE_URL}")!!.newBuilder())
   private val wiki: Wiki = Wiki(api)
 
   override fun setView(entryView: EntryView) {
